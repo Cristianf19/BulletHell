@@ -25,7 +25,7 @@ public class Bullet : Entity
     {
         if (collision.CompareTag("Boundary") || collision.CompareTag("BottomBorder"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -36,7 +36,7 @@ public class Bullet : Entity
         if (health != null)
         {
             health.TakeDamage(bulletDamage);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         
     }

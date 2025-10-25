@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
-    public GameObject bulletPrefab;
     private GameObject player;
+    public string poolTag = "Bullet";
 
     private void Start()
     {
@@ -15,7 +15,11 @@ public class Shooter : MonoBehaviour
     public void Shoot(Vector2 firePoint, Vector2 bulletDirection, float bulletSpeed, int bulletDamage, string ownerTag)
     {
         if (player == null) return;
-        GameObject bullet = Instantiate(bulletPrefab, firePoint, Quaternion.identity);
-        bullet.GetComponent<Bullet>().Setup(bulletDirection, bulletSpeed, bulletDamage, ownerTag);
+
+        GameObject bullet = PoolManager.Instance.SpawnFromPool(poolTag, firePoint, Quaternion.identity);
+        if (bullet != null)
+        {
+            bullet.GetComponent<Bullet>().Setup(bulletDirection, bulletSpeed, bulletDamage, ownerTag);
+        }
     }
 }

@@ -24,7 +24,7 @@ public class Enemy : Entity
         player = GameObject.FindGameObjectWithTag("Player").transform;
         shooter = GetComponent<Shooter>();
         movementPattern = GetComponent<EnemyMovementPattern>();
-        StartCoroutine(enemyShoot(EnemyShootPattern.Spread));
+        StartCoroutine(enemyShoot(EnemyShootPattern.Continuous));
     }
 
     void Update()
