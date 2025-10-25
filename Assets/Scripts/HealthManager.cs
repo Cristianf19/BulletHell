@@ -31,6 +31,6 @@ public class HealthManager : MonoBehaviour
     private void Die()
     {
         Debug.Log(gameObject.name + " semurio");
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

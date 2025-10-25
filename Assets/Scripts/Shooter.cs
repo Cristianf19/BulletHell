@@ -14,7 +14,7 @@ public class Shooter : MonoBehaviour
 
     public void Shoot(Vector2 firePoint, Vector2 bulletDirection, float bulletSpeed, int bulletDamage, string ownerTag)
     {
-        if (player == null) return;
+        if (player == null || !player.activeInHierarchy) return;
 
         GameObject bullet = PoolManager.Instance.SpawnFromPool(poolTag, firePoint, Quaternion.identity);
         if (bullet != null)

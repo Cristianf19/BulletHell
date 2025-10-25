@@ -24,15 +24,15 @@ public class SpawnEnemyManager : MonoBehaviour
 
     }
 
-    public void SpawnEnemy(GameObject enemyPrefab, int spawnPoint, Stats enemyStats)
+    public void SpawnEnemy(string poolTag, int spawnPoint, Stats enemyStats)
     {
         if (spawnPoint < 0 || spawnPoint >= spawnPoints.Count)
         {
-            Debug.LogWarning("Índice de spawn inválido");
+            Debug.LogWarning("indice de spawn invalido");
             return;
         }
 
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoints[spawnPoint].position, Quaternion.identity);
+        GameObject enemy = PoolManager.Instance.SpawnFromPool(poolTag, spawnPoints[spawnPoint].position, Quaternion.identity);
         HealthManager hm = enemy.GetComponent<HealthManager>();
         hm.Setup(enemyStats);
         enemy.GetComponent<Enemy>().Setup(enemyStats);

@@ -17,8 +17,8 @@ public class WaveManager : MonoBehaviour
 
     void EnemyLoop()
     {
-        if(player == null) CancelInvoke("EnemyLoop");
+        if(player == null || !player.activeInHierarchy) CancelInvoke("EnemyLoop");
         int position = Random.Range(0, 3);
-        spawnManager.SpawnEnemy(spawnManager.zigzagEnemyPrefab, position, spawnManager.enemyBasicStats);
+        spawnManager.SpawnEnemy("ZigzagEnemy", position, spawnManager.enemyBasicStats);
     }
 }
