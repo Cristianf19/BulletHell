@@ -649,6 +649,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnManager: {fileID: 155141259}
+  spawnEvents:
+  - enemyType: 1
+    spawnPointIndex: 1
+    enemyCount: 4
+    timeToSpawn: 2
+    delayBetween: 1
 --- !u!4 &1043998192
 Transform:
   m_ObjectHideFlags: 0
