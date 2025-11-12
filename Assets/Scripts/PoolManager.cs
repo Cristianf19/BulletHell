@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-   [System.Serializable]
-    public class Pool
-    {
-        public string tag;
-        public GameObject prefab;
-        public int size;
-    }
-
     public static PoolManager Instance;
 
     private void Awake()

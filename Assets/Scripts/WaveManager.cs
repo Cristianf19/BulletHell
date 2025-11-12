@@ -32,10 +32,10 @@ public class WaveManager : MonoBehaviour
         {
             switch (type)
             {
-                case EnemyType.Basic: return "basicEnemy";
+                case EnemyType.Basic: return "BasicEnemy";
                 case EnemyType.Zigzag: return "ZigzagEnemy";
-                case EnemyType.Bomb: return "bombEnemy";
-                case EnemyType.Boss: return "bossEnemy";
+                case EnemyType.Bomb: return "BombEnemy";
+                case EnemyType.Boss: return "BossEnemy";
                 default: return string.Empty;
             }
         }
@@ -48,7 +48,7 @@ public class WaveManager : MonoBehaviour
     private HashSet<SpawnEvent> triggeredEvents = new HashSet<SpawnEvent>();
 
 
-    void Update()
+    private void Update()
     {
         levelTimer += Time.deltaTime;
 

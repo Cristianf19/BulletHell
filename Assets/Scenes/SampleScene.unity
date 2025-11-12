@@ -655,6 +655,11 @@ MonoBehaviour:
     enemyCount: 4
     timeToSpawn: 2
     delayBetween: 1
+  - enemyType: 0
+    spawnPointIndex: 1
+    enemyCount: 4
+    timeToSpawn: 6
+    delayBetween: 1
 --- !u!4 &1043998192
 Transform:
   m_ObjectHideFlags: 0
@@ -1063,6 +1068,9 @@ MonoBehaviour:
     size: 100
   - tag: ZigzagEnemy
     prefab: {fileID: 6475183586543139522, guid: 6d4ef398ac405864db8b35e6fa12a4eb, type: 3}
+    size: 20
+  - tag: BasicEnemy
+    prefab: {fileID: 6475183586543139522, guid: 806e8624398acd5499a7bbfbb9ffc223, type: 3}
     size: 20
 --- !u!4 &2139591402
 Transform:
