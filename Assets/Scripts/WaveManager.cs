@@ -32,7 +32,7 @@ public class WaveManager : MonoBehaviour
         {
             switch (type)
             {
-                case EnemyType.Basic: return "basicEnemy";
+                case EnemyType.Basic: return "BasicEnemy";
                 case EnemyType.Zigzag: return "ZigzagEnemy";
                 case EnemyType.Bomb: return "bombEnemy";
                 case EnemyType.Boss: return "bossEnemy";

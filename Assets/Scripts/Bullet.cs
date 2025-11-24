@@ -8,6 +8,8 @@ public class Bullet : Entity
     private float bulletSpeed;
     private int bulletDamage;
     private string bulletOwner;
+
+
     public void Setup(Vector2 direction, float speed, int damage, string owner)
     {
         bulletDirection = direction;
@@ -32,6 +34,7 @@ public class Bullet : Entity
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(bulletOwner) || collision.CompareTag("Bullet")) return;
+
         HealthManager health = collision.GetComponent<HealthManager>();
         if (health != null)
         {
