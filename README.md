@@ -1,55 +1,72 @@
 flowchart LR
+
+  %% ========== MAIN MENU ==========
+
   subgraph MainMenuScene["MainMenu Scene"]
-    MM[MainMenu.cs / UI Canvas]
-    MenuMgr[MenuManager.cs]
+    MM["MainMenu.cs / UI"]
+    MenuMgr["MenuManager.cs"]
   end
 
-  subgraph GameScene["Game Scene (Runtime)"]
-    GM[Game / Level Manager (implicit)]
-    Player[Player.cs]
-    UI[UI Canvas (HUD, PausePanel)]
-    Pool[PoolManager / Pool classes]
-    Spawn[SpawnEnemyManager.cs]
-    Waves[WaveManager.cs]
-    EnemyComp[Enemy.cs]
-    Shooter[Shooter.cs]
-    ShootPattern[ShootPattern.cs]
-    Movement[EnemyMovementPattern*]
-    Stats[EnemyStats / PlayerStats]
-    Health[HealthManager / HealthBar]
+
+  %% ========== GAME SCENE ==========
+
+  subgraph GameScene["Game Scene"]
+    CoreManager["Game Core Manager"]
+    Player["Player.cs"]
+    UIHUD["HUD Canvas"]
+    UIPause["Pause Menu Canvas"]
+    Pool["PoolManager.cs"]
+    Spawn["SpawnEnemyManager.cs"]
+    Waves["WaveManager.cs"]
+    EnemyComp["Enemy.cs"]
+    Shooter["Shooter.cs"]
+    ShootPattern["ShootPattern.cs"]
+    MovementPattern["EnemyMovementPattern (Base + Children)"]
+    Stats["EnemyStats / PlayerStats"]
+    HealthSys["HealthManager + HealthBar"]
   end
 
-  %% Scene transitions
-  MM -- "Play (Load GameScene)" --> GameScene
-  MenuMgr -- "ReturnToMenu / Quit" --> MM
 
-  %% Gameplay flows
-  Player -- "input -> shoots" --> Shooter
-  Shooter -- "uses" --> Pool
-  Shooter -- "uses" --> ShootPattern
-  EnemyComp -- "has" --> Movement
-  EnemyComp -- "uses" --> Shooter
-  EnemyComp -- "uses" --> Stats
-  EnemyComp -- "uses" --> Health
+  %% ========== SCENE TRANSITIONS ==========
 
-  Spawn -- "spawns enemies via" --> Pool
-  Waves -- "triggers" --> Spawn
-  GM -- "orchestrates" --> Spawn
-  GM -- "orchestrates" --> Pool
-  GM -- "updates game state" --> UI
-  UI -- "pause/resume" --> GM
-  MenuMgr -- "Pause UI (in GameScene)" --> UI
+  MM -- "Play" --> GameScene
+  MenuMgr -- "ReturnToMenu" --> MM
 
-  %% Pools and reuse
-  Pool -- "provides bullets/enemies to" --> Shooter
-  Pool -- "provides enemies to" --> Spawn
 
-  %% Notes cluster
-  classDef notes fill:#f9f9f9,stroke:#333,stroke-width:0.5;
+  %% ========== GAMEPLAY FLOW ==========
+
+  Player --> Shooter
+  Shooter --> Pool
+  Shooter --> ShootPattern
+
+  EnemyComp --> MovementPattern
+  EnemyComp --> Shooter
+  EnemyComp --> Stats
+  EnemyComp --> HealthSys
+
+  Waves --> Spawn
+  Spawn --> Pool
+
+  UIHUD --> CoreManager
+  UIPause --> CoreManager
+  CoreManager --> UIHUD
+
+  MenuMgr --> UIPause
+
+
+  %% ========== POOLING ==========
+
+  Pool -- "Bullets" --> Shooter
+  Pool -- "Enemies" --> Spawn
+
+
+  %% ========== NOTES ==========
+
   subgraph Notes["Notes"]
-    N1["- Pause: Time.timeScale = 0 (MenuManager)"]
-    N2["- Pools avoid Instantiate/Destroy"]
-    N3["- Movement patterns: ZigZag / Straight (inherit EnemyMovementPattern)"]
-    N4["- ShootPattern defines firing behaviour"]
+    N1["Pause = timeScale = 0"]
+    N2["Pooling optimiza rendimiento"]
+    N3["MovementPatterns: ZigZag, Straight…"]
+    N4["ShootPattern define comportamiento del disparo"]
   end
+
   Notes --- GameScene
