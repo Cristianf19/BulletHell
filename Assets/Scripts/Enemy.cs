@@ -24,7 +24,7 @@ public class Enemy : Entity
         player = GameObject.FindGameObjectWithTag("Player").transform;
         shooter = GetComponent<Shooter>();
         movementPattern = GetComponent<EnemyMovementPattern>();
-        StartCoroutine(enemyShoot(EnemyShootPattern.Continuous));
+        StartCoroutine(enemyShoot(EnemyShootPattern.Burst));
     }
 
     void Update()
@@ -59,7 +59,7 @@ public class Enemy : Entity
                     break;
 
                 case EnemyShootPattern.Burst:
-                    yield return StartCoroutine(BurstShoot(3, 0.2f));
+                    yield return StartCoroutine(BurstShoot(3, 0.4f));
                     yield return new WaitForSeconds(2f);
                     break;
 
@@ -105,8 +105,8 @@ IEnumerator BurstShoot(int shots, float delay)
 {
     for (int i = 0; i < shots; i++)
     {
-        ShootTowardsPlayer();
         yield return new WaitForSeconds(delay);
+        ShootTowardsPlayer();
     }
 }
 
