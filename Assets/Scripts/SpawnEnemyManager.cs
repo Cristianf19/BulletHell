@@ -7,8 +7,8 @@ public class SpawnEnemyManager : MonoBehaviour
     public GameObject spawner;
     List<Transform> spawnPoints = new List<Transform>();
 
-    public GameObject basicEnemyPrefab;
-    public GameObject zigzagEnemyPrefab;
+    //public GameObject basicEnemyPrefab;
+    //public GameObject zigzagEnemyPrefab;
 
     public Stats enemyBasicStats;
 
@@ -24,7 +24,7 @@ public class SpawnEnemyManager : MonoBehaviour
 
     }
 
-    public void SpawnEnemy(string poolTag, int spawnPoint, Stats enemyStats)
+    public void SpawnEnemy(string poolTag, int spawnPoint, Stats enemyStats, Enemy.EnemyShootPattern shootPattern)
     {
         if (spawnPoint < 0 || spawnPoint >= spawnPoints.Count)
         {
@@ -35,6 +35,6 @@ public class SpawnEnemyManager : MonoBehaviour
         GameObject enemy = PoolManager.Instance.SpawnFromPool(poolTag, spawnPoints[spawnPoint].position, Quaternion.identity);
         HealthManager hm = enemy.GetComponent<HealthManager>();
         hm.Setup(enemyStats);
-        enemy.GetComponent<Enemy>().Setup(enemyStats);
+        enemy.GetComponent<Enemy>().Setup(enemyStats, shootPattern);
     }
 }

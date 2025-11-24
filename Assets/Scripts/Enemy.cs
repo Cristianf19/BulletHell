@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
+    public enum EnemyShootPattern
+    {
+        Continuous,   
+        Burst,        
+        Spread,       
+        Explosion     
+    }
+
     private Stats enemyStats;
     private Shooter shooter;
     public EnemyMovementPattern movementPattern;
@@ -12,10 +20,14 @@ public class Enemy : Entity
     public Transform player;
     private string bulletTag = "Enemy";
 
+    private EnemyShootPattern patronDisparo;
 
-    public void Setup(Stats stats)
+
+    public void Setup(Stats stats, EnemyShootPattern patron)
     {
         enemyStats = stats;
+        patronDisparo = patron;
+        StartCoroutine(enemyShoot(patron));
     }
 
     private void Start()    
@@ -24,7 +36,6 @@ public class Enemy : Entity
         player = GameObject.FindGameObjectWithTag("Player").transform;
         shooter = GetComponent<Shooter>();
         movementPattern = GetComponent<EnemyMovementPattern>();
-        StartCoroutine(enemyShoot(EnemyShootPattern.Burst));
     }
 
     void Update()
@@ -36,16 +47,6 @@ public class Enemy : Entity
         }
         firePoint = new Vector2(enemyFirePoint.position.x, enemyFirePoint.position.y);
     }
-
-    /* IEnumerator enemyShoot()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(enemyStats.cadencyShoot());
-            Vector2 bulletDirection = ((Vector2)player.position - firePoint).normalized;
-            shooter.Shoot(firePoint, bulletDirection, enemyStats.speedShoot(), enemyStats.bulletDamage(), bulletTag);
-        }
-    } */
 
     IEnumerator enemyShoot(EnemyShootPattern pattern)
     {
@@ -69,8 +70,8 @@ public class Enemy : Entity
                     break;
 
                 case EnemyShootPattern.Explosion:
-                    yield return new WaitForSeconds(enemyStats.cadencyShoot());
-                    ExplosionShoot(12); 
+                    yield return new WaitForSeconds(2f);
+                    ExplosionShoot(16); 
                     break;
             }
 
@@ -81,18 +82,10 @@ public class Enemy : Entity
     {
         if (collision.CompareTag("BottomBorder"))
         {
-            StopCoroutine(enemyShoot(EnemyShootPattern.Continuous));
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
-    public enum EnemyShootPattern
-    {
-        Continuous,   
-        Burst,        
-        Spread,       
-        Explosion     
-    }
 
 
 void ShootTowardsPlayer()
@@ -126,13 +119,20 @@ void SpreadShoot(int bulletCount, float angleStep)
 
 void ExplosionShoot(int bulletCount)
 {
-    float angleStep = 360f / bulletCount;
+    //int bulletCount = 8;
+    float angle = 360f / bulletCount;
+    float currentAngle = 0f;
+
     for (int i = 0; i < bulletCount; i++)
     {
-        float angle = i * angleStep;
-        Vector2 dir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-        shooter.Shoot(firePoint, dir, enemyStats.speedShoot(), enemyStats.bulletDamage(), bulletTag);
+        float rad = currentAngle * Mathf.Deg2Rad;
+        Vector2 direction = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)).normalized;
+
+        shooter.Shoot(firePoint, direction, enemyStats.speedShoot(), enemyStats.bulletDamage(), bulletTag);
+        currentAngle += angle;
     }
+    gameObject.SetActive(false);
+    
 }
 
 }
