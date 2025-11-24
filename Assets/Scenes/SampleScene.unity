@@ -656,8 +656,13 @@ MonoBehaviour:
     timeToSpawn: 2
     delayBetween: 1
   - enemyType: 0
-    spawnPointIndex: 1
+    spawnPointIndex: 2
     enemyCount: 4
+    timeToSpawn: 6
+    delayBetween: 1
+  - enemyType: 2
+    spawnPointIndex: 0
+    enemyCount: 1
     timeToSpawn: 6
     delayBetween: 1
 --- !u!4 &1043998192
@@ -1072,6 +1077,9 @@ MonoBehaviour:
   - tag: BasicEnemy
     prefab: {fileID: 6475183586543139522, guid: 806e8624398acd5499a7bbfbb9ffc223, type: 3}
     size: 20
+  - tag: BombEnemy
+    prefab: {fileID: 2356760992678587294, guid: 6228cca21f456f840b8174eadcfac68f, type: 3}
+    size: 5
 --- !u!4 &2139591402
 Transform:
   m_ObjectHideFlags: 0

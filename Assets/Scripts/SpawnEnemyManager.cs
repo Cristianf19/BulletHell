@@ -7,8 +7,8 @@ public class SpawnEnemyManager : MonoBehaviour
     public GameObject spawner;
     List<Transform> spawnPoints = new List<Transform>();
 
-    public GameObject basicEnemyPrefab;
-    public GameObject zigzagEnemyPrefab;
+    //public GameObject basicEnemyPrefab;
+    //public GameObject zigzagEnemyPrefab;
 
     public Stats enemyBasicStats;
 
