@@ -39,6 +39,17 @@ public class WaveManager : MonoBehaviour
                 default: return string.Empty;
             }
         }
+        public static Enemy.EnemyShootPattern GetShootTypeString(EnemyType type)
+        {
+            switch (type)
+            {
+                case EnemyType.Basic: return Enemy.EnemyShootPattern.Burst;
+                case EnemyType.Zigzag: return Enemy.EnemyShootPattern.Burst;
+                case EnemyType.Bomb: return Enemy.EnemyShootPattern.Explosion;
+                case EnemyType.Boss: return Enemy.EnemyShootPattern.Burst;
+                default: return Enemy.EnemyShootPattern.Burst;
+            }
+        }
     }
 
     public List<SpawnEvent> spawnEvents = new List<SpawnEvent>();
@@ -72,7 +83,8 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < spawnEv.enemyCount; i++)
         {
             string enemyName = EnemyTypeHelper.GetEnemyTypeString(spawnEv.enemyType);
-            spawnManager.SpawnEnemy(enemyName, spawnEv.spawnPointIndex, spawnManager.enemyBasicStats);
+            Enemy.EnemyShootPattern shootPattern = EnemyTypeHelper.GetShootTypeString(spawnEv.enemyType);
+            spawnManager.SpawnEnemy(enemyName, spawnEv.spawnPointIndex, spawnManager.enemyBasicStats, shootPattern);
 
             if (spawnEv.delayBetween > 0f)
                 yield return new WaitForSeconds(spawnEv.delayBetween);

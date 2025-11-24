@@ -22,4 +22,6 @@ public class Shooter : MonoBehaviour
             bullet.GetComponent<Bullet>().Setup(bulletDirection, bulletSpeed, bulletDamage, ownerTag);
         }
     }
+
+    
 }
